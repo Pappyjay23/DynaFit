@@ -4,53 +4,51 @@ interface MeasurementFormProps {
 		chest: number;
 		sleeveLength: number;
 	};
-	onMeasurementChange: (name: string, value: number) => void;
+	handleMeasurementChange: (name: string, value: number) => void;
 }
 
-export default function MeasurementForm({
+const MeasurementForm = ({
 	measurements,
-	onMeasurementChange,
-}: MeasurementFormProps) {
-	// Define min and max values for each field
+	handleMeasurementChange,
+}: MeasurementFormProps) => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		handleMeasurementChange(name, Number(value));
+	};
+
 	const ranges = {
 		height: { min: 100, max: 400 },
 		chest: { min: 100, max: 400 },
-		sleeveLength: { min: 10, max: 80 },
+		sleeveLength: { min: 10, max: 100 },
+		waist: { min: 10, max: 30 },
 	};
-
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		onMeasurementChange(name, Number(value));
-	};
-
 	const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		const { min, max } = ranges[name as keyof typeof ranges]; // Get min and max for the specific field
-		const numericValue = Math.max(min, Math.min(max, Number(value))); // Clamp to the field's range
-		onMeasurementChange(name, numericValue);
+		const { min, max } = ranges[name as keyof typeof ranges];
+		const numericalValue = Math.max(min, Math.min(max, Number(value)));
+		handleMeasurementChange(name, numericalValue);
 	};
-
 	return (
 		<div className='space-y-4'>
-			<h2 className='text-xl'>Measurements</h2>
-			{Object.entries(measurements).map(([name, value]) => {
-				return (
-					<div key={name} className='flex flex-col space-y-1'>
-						<label htmlFor={name} className='capitalize'>
-							{name} (cm)
-						</label>
-						<input
-							type='text'
-							id={name}
-							name={name}
-							value={value}
-							onChange={handleInputChange}
-							onBlur={handleInputBlur} // Apply clamping on blur
-							className='border rounded px-2 py-1 bg-white/30 outline-none border-none w-[60%]'
-						/>
-					</div>
-				);
-			})}
+			<h2>Measurements</h2>
+			{Object.entries(measurements).map(([name, value]) => (
+				<div key={name} className='flex flex-col gap-2'>
+					<label htmlFor={name} className='capitalize'>
+						{name}
+					</label>
+					<input
+						type='text'
+						id={name}
+						name={name}
+						value={value}
+						onChange={handleInputChange}
+						onBlur={handleInputBlur}
+						className='border-0 outline-none px-2 py-1 rounded-[4px] bg-white/30 w-[60%]'
+					/>
+				</div>
+			))}
 		</div>
 	);
-}
+};
+
+export default MeasurementForm;

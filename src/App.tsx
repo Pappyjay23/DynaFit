@@ -1,24 +1,25 @@
 import { useState } from "react";
-import Shirt from "./components/Shirt";
-import MeasurementForm from "./components/MeasurementForm";
-import AdjustmentSliders from "./components/AdjustmentSliders";
 import AppBg from "./assets/bg-img.png";
+import MeasurementForm from "./components/MeasurementForm";
+import Shirt from "./components/Shirt";
+import AdjustmentSliders from "./components/AdjustmentSliders";
 
 export default function App() {
 	const [measurements, setMeasurements] = useState({
 		height: 200,
 		chest: 100,
 		sleeveLength: 60,
-	});
-
-	const [adjustments, setAdjustments] = useState({
-		widthFactor: 1,
-		heightFactor: 1,
+		waist: 30
 	});
 
 	const handleMeasurementChange = (name: string, value: number) => {
 		setMeasurements((prev) => ({ ...prev, [name]: value }));
 	};
+
+	const [adjustments, setAdjustments] = useState({
+		widthFactor: 1,
+		heightFactor: 1,
+	});
 
 	const handleAdjustmentChange = (name: string, value: number) => {
 		setAdjustments((prev) => ({ ...prev, [name]: value }));
@@ -43,22 +44,22 @@ export default function App() {
 							<Shirt
 								height={measurements.height * adjustments.heightFactor}
 								chest={measurements.chest * adjustments.widthFactor}
-								sleeveLength={
-									measurements.sleeveLength * adjustments.heightFactor
-								}
+								sleeveLength={measurements.sleeveLength}
+								waist={measurements.waist}
 							/>
 						</div>
 					</div>
-					<div className='flex-[1]'>
+					<div className='flex-[1] flex flex-col gap-4'>
 						{/* Measurement Form */}
 						<MeasurementForm
+							handleMeasurementChange={handleMeasurementChange}
 							measurements={measurements}
-							onMeasurementChange={handleMeasurementChange}
 						/>
+
 						{/* Adjustment Slider */}
 						<AdjustmentSliders
 							adjustments={adjustments}
-							onAdjustmentChange={handleAdjustmentChange}
+							handleAdjustmentChange={handleAdjustmentChange}
 						/>
 					</div>
 				</div>

@@ -2,9 +2,15 @@ interface ShirtProps {
 	height: number;
 	chest: number;
 	sleeveLength: number;
+	waist: number;
 }
 
-export default function Shirt({ height, chest, sleeveLength }: ShirtProps) {
+export default function Shirt({
+	height,
+	chest,
+	sleeveLength,
+	waist,
+}: ShirtProps) {
 	return (
 		<svg
 			width={chest + 40}
@@ -13,12 +19,13 @@ export default function Shirt({ height, chest, sleeveLength }: ShirtProps) {
 			{/* Shirt body */}
 			<path
 				d={`
-            M20 20
-            L${chest + 20} 20
-            L${chest + 20} ${height + 20}
-            L20 ${height + 20}
-            Z
-          `}
+			M20 20
+			L${chest + 20} 20
+			Q${chest + 40} ${height / 2 + 20}, ${chest + 20 - waist} ${height + 20}
+			L${20 + waist} ${height + 20}
+			Q0 ${height / 2 + 20}, 20 20
+			Z
+		`}
 				fill='#3b82f6'
 			/>
 
