@@ -13,7 +13,7 @@ interface AdjustmentSlidersProps {
   
     return (
       <div className="space-y-4 mt-8">
-        <h2 className="text-xl font-semibold">Adjustments</h2>
+        <h2 className="text-xl">Adjustments</h2>
         {Object.entries(adjustments).map(([name, value]) => (
           <div key={name} className="space-y-2">
             <label htmlFor={name} className="capitalize">{name.replace('Factor', '')}</label>
