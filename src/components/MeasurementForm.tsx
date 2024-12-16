@@ -34,7 +34,6 @@ export default function MeasurementForm({
 		<div className='space-y-4'>
 			<h2 className='text-xl'>Measurements</h2>
 			{Object.entries(measurements).map(([name, value]) => {
-				const { min, max } = ranges[name as keyof typeof ranges]; // Get min and max for each field
 				return (
 					<div key={name} className='flex flex-col space-y-1'>
 						<label htmlFor={name} className='capitalize'>
@@ -47,7 +46,6 @@ export default function MeasurementForm({
 							value={value}
 							onChange={handleInputChange}
 							onBlur={handleInputBlur} // Apply clamping on blur
-							placeholder={`Enter a value between ${min}-${max}`}
 							className='border rounded px-2 py-1 bg-white/30 outline-none border-none w-[60%]'
 						/>
 					</div>

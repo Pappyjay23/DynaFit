@@ -50,10 +50,12 @@ export default function App() {
 						</div>
 					</div>
 					<div className='flex-[1]'>
+						{/* Measurement Form */}
 						<MeasurementForm
 							measurements={measurements}
 							onMeasurementChange={handleMeasurementChange}
 						/>
+						{/* Adjustment Slider */}
 						<AdjustmentSliders
 							adjustments={adjustments}
 							onAdjustmentChange={handleAdjustmentChange}
